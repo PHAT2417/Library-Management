@@ -1,4 +1,6 @@
 /*
+ * Created: Grace Ho
+ * Last updated: 5/3/2026
  * Book class that manages the following attributes:
  	* Title
  	* Author
