@@ -150,8 +150,30 @@ public class Library {
      * Display first 20 books.
      */
     public void displayAllBooks() {
+		if (booksByISBN.isEmpty()) {
+			system.out.println("The Library has no books.\n");
+			return;
+		}
 
-    }
+		System.out.println("=== All Books (first 20 shown) ===");
+
+		int count = 0;
+
+		for (Book book : booksByISBN.values()) {
+
+			if (count >= 20) {
+				break;
+			}
+
+			System.out.println((count + 1) + ". " + book.toString()
+					+ " [" + (book.getStatus() ? "available" : "Borrowed") + "]");
+			count++;
+								
+
+    	}
+		System.out.println("Total books in library; "
+				+ booksByISBN.size() + "\n");
+	}
 
     /**
      * Display all available (status = True) books
