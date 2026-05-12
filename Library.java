@@ -139,7 +139,7 @@ public class Library {
 
 		
 		book.setStatus(true);
-		System.out.println("successfullu returned: " + book.getTitle() + "\n");
+		System.out.println("successfully returned: " + book.getTitle() + "\n");
 		return true;
 
     }
@@ -151,7 +151,7 @@ public class Library {
      */
     public void displayAllBooks() {
 		if (booksByISBN.isEmpty()) {
-			system.out.println("The Library has no books.\n");
+			System.out.println("The Library has no books.\n");
 			return;
 		}
 
@@ -171,7 +171,7 @@ public class Library {
 								
 
     	}
-		System.out.println("Total books in library; "
+		System.out.println("Total books in library: "
 				+ booksByISBN.size() + "\n");
 	}
 
@@ -193,7 +193,7 @@ public class Library {
 		if (count == 0) {
 			System.out.println("No books are currently available.");
 		} else {
-			Sysytem.out.println("Total available: " + count + "\n");
+			System.out.println("Total available: " + count + "\n");
 		}
 	
     }
