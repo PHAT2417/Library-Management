@@ -102,7 +102,21 @@ public class Library {
      * @return true/false, whether borrow succeeded
      */
     public boolean borrowBook(String isbn) {
-        return false;
+		Book book= findBookByISBN(isbn);
+
+		if (book == null) {
+			System.out.println("Book with ISBN " + isbn + " not found.\n");
+			return false;
+		}
+
+		if (!book.getStatus()) {
+			System.out.println(book.getTitle() + " is already borrowed.\n");
+			return false;
+		}
+
+		book.setStatus(false);
+		System.out.println("Successfully borrowed: " + book.getTitle() + "\n");
+		return true;
     }
 
     /**
@@ -111,7 +125,23 @@ public class Library {
      * @return true/false, whether return succeeded
      */
     public boolean returnBook(String isbn) {
-        return false;
+		Book book = findBookByISBN(isbn);
+
+		if (book == null) {
+			System.out.println("Book with ISBN " + isbn + " not found.\n");
+			return false;
+		}
+
+		if (book.getStatus()) { 
+			System.out.println(book.getTitle() + " is not currently borrowed.\n");
+			return false;
+		}
+
+		
+		book.setStatus(true);
+		System.out.println("successfullu returned: " + book.getTitle() + "\n");
+		return true;
+
     }
 
 
@@ -127,7 +157,23 @@ public class Library {
      * Display all available (status = True) books
      */
     public void displayAllAvailableBooks() {
+		System.out.println("=== Available Books ===");
 
+		int count = 0;
+
+		for (Book book : booksByISBN.values()) {
+			if (book.getStatus()) {
+				count++;
+				System.out.println(count + ". " + book.toString());
+			}
+		}
+
+		if (count == 0) {
+			System.out.println("No books are currently available.");
+		} else {
+			Sysytem.out.println("Total available: " + count + "\n");
+		}
+	
     }
 
    /**
