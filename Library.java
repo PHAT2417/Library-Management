@@ -265,7 +265,34 @@ public class Library {
     * @param filename - what the file will be named
     */
 	public void saveToFile(String filename) {
-	
+        try (BufferedWriter bw = new BufferedWriter(
+                new OutputStreamWriter(new FileOutputStream(filename), "UTF-8"))) {
+
+            int saved = 0;
+
+            for (Book book : booksByISBN.values()) {
+                // Format: "Title, by LastName, FirstName, ISBN, Year"
+                // getAuthor() returns "LastName,FirstName" (no space after comma)
+                // so we split and rejoin with proper spacing
+                String[] authorParts = book.getAuthor().split(",", 2);
+                String lastName  = authorParts[0].trim();
+                String firstName = authorParts.length > 1 ? authorParts[1].trim() : "";
+
+                String line = book.getTitle() + ", by " +
+                            lastName + ", " + firstName + ", " +
+                            book.getISBN() + ", " + book.getYear();
+
+                bw.write(line);
+                bw.newLine();
+                saved++;
+            }
+
+            System.out.println("\nSaved to file: " + filename);
+            System.out.println("  Successfully saved: " + saved + " books\n");
+
+        } catch (IOException e) {
+            System.out.println("Error writing to file: " + e.getMessage());
+        }
 	}
     
     /**
