@@ -1,7 +1,7 @@
 
 /*
  * Created: Grace Ho (Modified by Pooja Ragala)
- * Last updated: 5/31/2026
+ * Last updated: 5/13/2026
  * Book class that manages the following attributes:
  	* Title
  	* Author
