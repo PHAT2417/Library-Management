@@ -1,6 +1,7 @@
+
 /*
- * Created: Grace Ho
- * Last updated: 5/3/2026
+ * Created: Grace Ho (Modified by Pooja Ragala)
+ * Last updated: 5/31/2026
  * Book class that manages the following attributes:
  	* Title
  	* Author
@@ -28,7 +29,7 @@ public class Book {
 	 */
 	public Book(String title, String authorFirst, String authorLast, String ISBN, int year) {
 		this.title = title;
-		this.authorFirst = authorFirst.substring(3);
+		this.authorFirst = authorFirst;
 		this.authorLast = authorLast;
 		this.ISBN = ISBN;
 		this.year = year;
@@ -52,7 +53,7 @@ public class Book {
 	
 	public String getAuthor() {
 		
-		return this.authorLast + "," + this.authorFirst;
+		return this.authorLast + ", " + this.authorFirst;
 	}
 	
 	public String getISBN() {
@@ -67,10 +68,18 @@ public class Book {
 		return this.status;
 	}
 	
+	/**
+	 * Convert book information into file format
+	 * @return formatted book string
+	 */
+	public String toFileString() {
+		return getTitle() + ", by " + getAuthor() + ", " +
+				getISBN() + ", " + getYear();
+	}
 	
 	public String toString() {
-		return getTitle() + ", by" + getAuthor() + ", " + getISBN() + 
-				getYear();
+		return getTitle() + ", by " + getAuthor() + ", " + getISBN() + 
+				", " + getYear();
 	}
 
 }
