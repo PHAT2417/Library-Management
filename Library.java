@@ -296,16 +296,217 @@ public class Library {
 	}
     
     /**
-     * Driver program to test Library and Book methods
-     * @param args
+     * Driver / main method — interactive menu that tests all Library methods.
+     * @param args command-line arguments (not used)
      */
     public static void main(String[] args) {
         Library library = new Library();
         Scanner scanner = new Scanner(System.in);
- 
-        // Step 1: Load file
-        System.out.print("Enter filename to load (e.g. book_donation.txt): ");
+
+        System.out.println("Welcome to the Library Management System!");
+        System.out.println("------------------------------------------");
+
+        // Load file on startup
+        System.out.print("Enter filename to load (e.g. book_donation.txt), or press Enter to skip: ");
         String filename = scanner.nextLine().trim();
-        library.loadFromFile(filename);
+        if (!filename.isEmpty()) {
+            library.loadFromFile(filename);
+        } else {
+            System.out.println("No file loaded. Starting with an empty library.\n");
+        }
+
+        // Interactive menu loop
+        boolean running = true;
+        while (running) {
+            System.out.println("\n========== LIBRARY MANAGEMENT SYSTEM ==========");
+            System.out.println(" 1. Display all books (first 20)");
+            System.out.println(" 2. Display all available books");
+            System.out.println(" 3. Search book by ISBN");
+            System.out.println(" 4. Search books by title");
+            System.out.println(" 5. Search books by author");
+            System.out.println(" 6. Add a new book");
+            System.out.println(" 7. Remove a book");
+            System.out.println(" 8. Borrow a book");
+            System.out.println(" 9. Return a book");
+            System.out.println("10. Load books from file");
+            System.out.println("11. Save books to file");
+            System.out.println(" 0. Exit");
+            System.out.println("================================================");
+            System.out.print("Enter your choice: ");
+
+            String choiceStr = scanner.nextLine().trim();
+            int choice;
+            try {
+                choice = Integer.parseInt(choiceStr);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a number between 0 and 11.\n");
+                continue;
+            }
+
+            System.out.println("----------------------------------------");
+
+            switch (choice) {
+
+                case 1:
+                    library.displayAllBooks();
+                    break;
+
+                case 2:
+                    library.displayAllAvailableBooks();
+                    break;
+
+                case 3:
+                    System.out.print("Enter ISBN: ");
+                    String isbnSearch = scanner.nextLine().trim();
+                    if (isbnSearch.isEmpty()) {
+                        System.out.println("ISBN cannot be empty.\n");
+                        break;
+                    }
+                    Book found = library.findBookByISBN(isbnSearch);
+                    if (found != null) {
+                        System.out.println("Book found:");
+                        System.out.println("  " + found.toString()
+                                + " [" + (found.getStatus() ? "Available" : "Borrowed") + "]\n");
+                    } else {
+                        System.out.println("No book found with ISBN: " + isbnSearch + "\n");
+                    }
+                    break;
+
+                case 4:
+                    System.out.print("Enter title: ");
+                    String titleSearch = scanner.nextLine().trim();
+                    if (titleSearch.isEmpty()) {
+                        System.out.println("Title cannot be empty.\n");
+                        break;
+                    }
+                    ArrayList<Book> byTitle = library.findBooksByTitle(titleSearch);
+                    if (byTitle != null && !byTitle.isEmpty()) {
+                        System.out.println("Books found (" + byTitle.size() + "):");
+                        int ti = 1;
+                        for (Book b : byTitle) {
+                            System.out.println("  " + ti++ + ". " + b.toString()
+                                    + " [" + (b.getStatus() ? "Available" : "Borrowed") + "]");
+                        }
+                        System.out.println();
+                    } else {
+                        System.out.println("No books found with title: \"" + titleSearch + "\"\n");
+                    }
+                    break;
+
+                case 5:
+                    System.out.println("Enter author name as: Last, First");
+                    System.out.print("Author: ");
+                    String authorSearch = scanner.nextLine().trim();
+                    if (authorSearch.isEmpty()) {
+                        System.out.println("Author name cannot be empty.\n");
+                        break;
+                    }
+                    List<Book> byAuthor = library.findBooksByAuthor(authorSearch);
+                    if (byAuthor != null && !byAuthor.isEmpty()) {
+                        System.out.println("Books by \"" + authorSearch + "\" (" + byAuthor.size() + "):");
+                        int ai = 1;
+                        for (Book b : byAuthor) {
+                            System.out.println("  " + ai++ + ". " + b.toString()
+                                    + " [" + (b.getStatus() ? "Available" : "Borrowed") + "]");
+                        }
+                        System.out.println();
+                    } else {
+                        System.out.println("No books found for author: \"" + authorSearch + "\"\n");
+                    }
+                    break;
+
+                case 6:
+                    System.out.println("--- Add New Book ---");
+                    System.out.print("Title: ");
+                    String newTitle = scanner.nextLine().trim();
+                    System.out.print("Author first name: ");
+                    String newFirst = scanner.nextLine().trim();
+                    System.out.print("Author last name: ");
+                    String newLast = scanner.nextLine().trim();
+                    System.out.print("ISBN: ");
+                    String newISBN = scanner.nextLine().trim();
+                    System.out.print("Publication year: ");
+                    String yearStr = scanner.nextLine().trim();
+
+                    if (newTitle.isEmpty() || newFirst.isEmpty() || newLast.isEmpty()
+                            || newISBN.isEmpty() || yearStr.isEmpty()) {
+                        System.out.println("All fields are required. Book not added.\n");
+                        break;
+                    }
+                    if (library.findBookByISBN(newISBN) != null) {
+                        System.out.println("A book with ISBN " + newISBN + " already exists.\n");
+                        break;
+                    }
+                    try {
+                        int newYear = Integer.parseInt(yearStr);
+                        library.addBook(new Book(newTitle, newFirst, newLast, newISBN, newYear));
+                        System.out.println("Successfully added: \"" + newTitle + "\"\n");
+                    } catch (NumberFormatException e) {
+                        System.out.println("Invalid year. Book not added.\n");
+                    }
+                    break;
+
+                case 7:
+                    System.out.print("Enter ISBN of book to remove: ");
+                    String removeISBN = scanner.nextLine().trim();
+                    if (removeISBN.isEmpty()) {
+                        System.out.println("ISBN cannot be empty.\n");
+                        break;
+                    }
+                    library.removeBook(removeISBN);
+                    break;
+
+                case 8:
+                    System.out.print("Enter ISBN of book to borrow: ");
+                    String borrowISBN = scanner.nextLine().trim();
+                    if (borrowISBN.isEmpty()) {
+                        System.out.println("ISBN cannot be empty.\n");
+                        break;
+                    }
+                    library.borrowBook(borrowISBN);
+                    break;
+
+                case 9:
+                    System.out.print("Enter ISBN of book to return: ");
+                    String returnISBN = scanner.nextLine().trim();
+                    if (returnISBN.isEmpty()) {
+                        System.out.println("ISBN cannot be empty.\n");
+                        break;
+                    }
+                    library.returnBook(returnISBN);
+                    break;
+
+                case 10:
+                    System.out.print("Enter filename to load: ");
+                    String loadFile = scanner.nextLine().trim();
+                    if (loadFile.isEmpty()) {
+                        System.out.println("Filename cannot be empty.\n");
+                        break;
+                    }
+                    library.loadFromFile(loadFile);
+                    break;
+
+                case 11:
+                    System.out.print("Enter filename to save to: ");
+                    String saveFile = scanner.nextLine().trim();
+                    if (saveFile.isEmpty()) {
+                        System.out.println("Filename cannot be empty.\n");
+                        break;
+                    }
+                    library.saveToFile(saveFile);
+                    break;
+
+                case 0:
+                    System.out.println("Thank you for using the Library Management System. Goodbye!");
+                    running = false;
+                    break;
+
+                default:
+                    System.out.println("Invalid choice. Please enter a number between 0 and 11.\n");
+                    break;
+            }
+        }
+
+        scanner.close();
     }
 }
