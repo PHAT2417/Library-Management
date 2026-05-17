@@ -24,6 +24,7 @@ public class Library {
     
     /**
      * Add book to the Maps
+     * Big O Analysis - Average Case: O(1) Worst Case: O(n)
      * @param book - object being added
      */
     public void addBook(Book book) {
@@ -67,6 +68,7 @@ public class Library {
 
     /**
      * Use ISBN to find books, will access ISBN map
+      * Big O Analysis - Average Case: O(n)
      * @param isbn - key to find
      * @return book found
      */
@@ -77,6 +79,7 @@ public class Library {
     /**
      * Find book(s) using a title. Can share title, but have different
      * authors
+      * Big O Analysis - Average Case: O(n)
      * @param title - key to find
      * @return list of books with that title
      */
@@ -87,6 +90,7 @@ public class Library {
     /**
      * Find book(s) using the author name. Can share title, but have 
      * different titles
+      * Big O Analysis - Average Case: O(n)
      * @param author - key to find
      * @return list of books with that author
      */
@@ -98,6 +102,7 @@ public class Library {
     //Borrowing and Returning Books
     /**
      * Borrow a book from the library, update status of book (false)
+     * Big O Analysis - Average Case: O(n)
      * @param isbn - key to find
      * @return true/false, whether borrow succeeded
      */
@@ -121,6 +126,7 @@ public class Library {
 
     /**
      * Update status of book (true)
+      * Big O Analysis - Average Case: O(n)
      * @param isbn - key to find
      * @return true/false, whether return succeeded
      */
@@ -133,13 +139,15 @@ public class Library {
 		}
 
 		if (book.getStatus()) { 
-			System.out.println(book.getTitle() + " is not currently borrowed.\n");
+			System.out.println(book.getTitle() + " is not currently "
+					+ "borrowed.\n");
 			return false;
 		}
 
 		
 		book.setStatus(true);
-		System.out.println("Successfully returned: " + book.getTitle() + "\n");
+		System.out.println("Successfully returned: " + book.getTitle() 
+					+ "\n");
 		return true;
 
     }
@@ -148,6 +156,7 @@ public class Library {
     //Display and Reporting
     /**
      * Display first 20 books.
+      * Big O Analysis - Average Case: O(n)
      */
     public void displayAllBooks() {
 		if (booksByISBN.isEmpty()) {
@@ -166,7 +175,8 @@ public class Library {
 			}
 
 			System.out.println((count + 1) + ". " + book.toString()
-					+ " [" + (book.getStatus() ? "Available" : "Borrowed") + "]");
+					+ " [" + (book.getStatus() ? "Available" : "Borrowed") 
+					+ "]");
 			count++;
 								
 
@@ -177,6 +187,7 @@ public class Library {
 
     /**
      * Display all available (status = True) books
+      * Big O Analysis - Average Case: O(n)
      */
     public void displayAllAvailableBooks() {
 		System.out.println("=== Available Books ===");
@@ -200,6 +211,7 @@ public class Library {
 
    /**
     * Load books from a file and add to our Maps
+     * Big O Analysis - Average Case: O(n)
     * @param filename
     */
    public void loadFromFile(String filename) {
@@ -288,7 +300,8 @@ public class Library {
             }
 
             System.out.println("\nSaved to file: " + filename);
-            System.out.println("  Successfully saved: " + saved + " books\n");
+            System.out.println("  Successfully saved: " + saved 
+            		+ " books\n");
 
         } catch (IOException e) {
             System.out.println("Error writing to file: " + e.getMessage());
@@ -307,18 +320,21 @@ public class Library {
         System.out.println("------------------------------------------");
 
         // Load file on startup
-        System.out.print("Enter filename to load (e.g. book_donation.txt), or press Enter to skip: ");
+        System.out.print("Enter filename to load (e.g. book_donation.txt), "
+        		+ "or press Enter to skip: ");
         String filename = scanner.nextLine().trim();
         if (!filename.isEmpty()) {
             library.loadFromFile(filename);
         } else {
-            System.out.println("No file loaded. Starting with an empty library.\n");
+            System.out.println("No file loaded. Starting with an "
+            		+ "empty library.\n");
         }
 
         // Interactive menu loop
         boolean running = true;
         while (running) {
-            System.out.println("\n========== LIBRARY MANAGEMENT SYSTEM ==========");
+            System.out.println("\n========== LIBRARY MANAGEMENT SYSTEM ==="
+            		+ "=======");
             System.out.println(" 1. Display all books (first 20)");
             System.out.println(" 2. Display all available books");
             System.out.println(" 3. Search book by ISBN");
@@ -331,7 +347,8 @@ public class Library {
             System.out.println("10. Load books from file");
             System.out.println("11. Save books to file");
             System.out.println(" 0. Exit");
-            System.out.println("================================================");
+            System.out.println("=========================================="
+            		+ "======");
             System.out.print("Enter your choice: ");
 
             String choiceStr = scanner.nextLine().trim();
@@ -339,7 +356,8 @@ public class Library {
             try {
                 choice = Integer.parseInt(choiceStr);
             } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Please enter a number between 0 and 11.\n");
+                System.out.println("Invalid input. Please enter a number "
+                		+ "between 0 and 11.\n");
                 continue;
             }
 
@@ -365,10 +383,11 @@ public class Library {
                     Book found = library.findBookByISBN(isbnSearch);
                     if (found != null) {
                         System.out.println("Book found:");
-                        System.out.println("  " + found.toString()
-                                + " [" + (found.getStatus() ? "Available" : "Borrowed") + "]\n");
+                        System.out.println("  " + found.toString() + " [" 
+                        + (found.getStatus() ? "Available" : "Borrowed") + "]\n");
                     } else {
-                        System.out.println("No book found with ISBN: " + isbnSearch + "\n");
+                        System.out.println("No book found with ISBN: " 
+                        		+ isbnSearch + "\n");
                     }
                     break;
 
@@ -384,12 +403,14 @@ public class Library {
                         System.out.println("Books found (" + byTitle.size() + "):");
                         int ti = 1;
                         for (Book b : byTitle) {
-                            System.out.println("  " + ti++ + ". " + b.toString()
-                                    + " [" + (b.getStatus() ? "Available" : "Borrowed") + "]");
+                            System.out.println("  " + ti++ + ". " 
+                            		+ b.toString()  + " [" 
+                            		+ (b.getStatus() ? "Available" : "Borrowed") + "]");
                         }
                         System.out.println();
                     } else {
-                        System.out.println("No books found with title: \"" + titleSearch + "\"\n");
+                        System.out.println("No books found with title: \"" 
+                        		+ titleSearch + "\"\n");
                     }
                     break;
 
@@ -403,15 +424,19 @@ public class Library {
                     }
                     List<Book> byAuthor = library.findBooksByAuthor(authorSearch);
                     if (byAuthor != null && !byAuthor.isEmpty()) {
-                        System.out.println("Books by \"" + authorSearch + "\" (" + byAuthor.size() + "):");
+                        System.out.println("Books by \"" + authorSearch 
+                        		+ "\" (" + byAuthor.size() + "):");
                         int ai = 1;
                         for (Book b : byAuthor) {
-                            System.out.println("  " + ai++ + ". " + b.toString()
-                                    + " [" + (b.getStatus() ? "Available" : "Borrowed") + "]");
+                            System.out.println("  " + ai++ + ". " 
+                            		+ b.toString() + " [" 
+                            		+ (b.getStatus() ? "Available" : "Borrowed") 
+                            		+ "]");
                         }
                         System.out.println();
                     } else {
-                        System.out.println("No books found for author: \"" + authorSearch + "\"\n");
+                        System.out.println("No books found for author: \"" 
+                        		+ authorSearch + "\"\n");
                     }
                     break;
 
@@ -428,19 +453,24 @@ public class Library {
                     System.out.print("Publication year: ");
                     String yearStr = scanner.nextLine().trim();
 
-                    if (newTitle.isEmpty() || newFirst.isEmpty() || newLast.isEmpty()
-                            || newISBN.isEmpty() || yearStr.isEmpty()) {
-                        System.out.println("All fields are required. Book not added.\n");
+                    if (newTitle.isEmpty() || newFirst.isEmpty() 
+                    		|| newLast.isEmpty() || newISBN.isEmpty() 
+                    		|| yearStr.isEmpty()) {
+                        System.out.println("All fields are required. "
+                        		+ "Book not added.\n");
                         break;
                     }
                     if (library.findBookByISBN(newISBN) != null) {
-                        System.out.println("A book with ISBN " + newISBN + " already exists.\n");
+                        System.out.println("A book with ISBN " + newISBN 
+                        		+ " already exists.\n");
                         break;
                     }
                     try {
                         int newYear = Integer.parseInt(yearStr);
-                        library.addBook(new Book(newTitle, newFirst, newLast, newISBN, newYear));
-                        System.out.println("Successfully added: \"" + newTitle + "\"\n");
+                        library.addBook(new Book(newTitle, newFirst, 
+                        		newLast, newISBN, newYear));
+                        System.out.println("Successfully added: \"" 
+                        		+ newTitle + "\"\n");
                     } catch (NumberFormatException e) {
                         System.out.println("Invalid year. Book not added.\n");
                     }
@@ -497,12 +527,14 @@ public class Library {
                     break;
 
                 case 0:
-                    System.out.println("Thank you for using the Library Management System. Goodbye!");
+                    System.out.println("Thank you for using the Library "
+                    		+ "Management System. Goodbye!");
                     running = false;
                     break;
 
                 default:
-                    System.out.println("Invalid choice. Please enter a number between 0 and 11.\n");
+                    System.out.println("Invalid choice. Please enter a "
+                    		+ "number between 0 and 11.\n");
                     break;
             }
         }
