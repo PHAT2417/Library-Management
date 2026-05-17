@@ -139,7 +139,7 @@ public class Library {
 
 		
 		book.setStatus(true);
-		System.out.println("successfully returned: " + book.getTitle() + "\n");
+		System.out.println("Successfully returned: " + book.getTitle() + "\n");
 		return true;
 
     }
@@ -166,7 +166,7 @@ public class Library {
 			}
 
 			System.out.println((count + 1) + ". " + book.toString()
-					+ " [" + (book.getStatus() ? "available" : "Borrowed") + "]");
+					+ " [" + (book.getStatus() ? "Available" : "Borrowed") + "]");
 			count++;
 								
 
