@@ -34,7 +34,11 @@ public class Library {
     
     /**
      * Add book to the Maps
-     * Big O Analysis - Average Case: O(1) Worst Case: O(n)
+     * Big O Analysis 
+	 	Average Case: O(1)
+			Basic appending, without resizing, does not require traversal
+	 	Worst Case: O(n)
+			Appending with resizing of ArrayList, requires traversal to copy elements
      * @param book - object being added
      */
     public void addBook(Book book) {
@@ -85,6 +89,7 @@ public class Library {
     /**
      * Use ISBN to find books, will access ISBN map
       * Big O Analysis - Average Case: O(n)
+	  	Traverses ArrayList of n size to find book based on given ISBN
      * @param isbn - key to find
      * @return book found
      */
@@ -96,6 +101,7 @@ public class Library {
      * Find book(s) using a title. Can share title, but have different
      * authors
       * Big O Analysis - Average Case: O(n)
+	  	Traverses ArrayList of n size to find book based on given title
      * @param title - key to find
      * @return list of books with that title
      */
@@ -107,6 +113,7 @@ public class Library {
      * Find book(s) using the author name. Can share title, but have 
      * different titles
       * Big O Analysis - Average Case: O(n)
+	  	Traverses ArrayList of n size to find book based on given author
      * @param author - key to find
      * @return list of books with that author
      */
@@ -119,6 +126,7 @@ public class Library {
     /**
      * Borrow a book from the library, update status of book (false)
      * Big O Analysis - Average Case: O(n)
+	 	Traverses ArrayList of n size to find if book exists, and if does, marks as unavailable and provides book
      * @param isbn - key to find
      * @return true/false, whether borrow succeeded
      */
@@ -146,6 +154,7 @@ public class Library {
     /**
      * Update status of book (true)
       * Big O Analysis - Average Case: O(n)
+	  	Traverses ArrayList of n size to find if book exists, and if does, marks as available again
      * @param isbn - key to find
      * @return true/false, whether return succeeded
      */
@@ -178,6 +187,7 @@ public class Library {
     /**
      * Display first 20 books.
       * Big O Analysis - Average Case: O(n)
+	  	Traverses ArrayList of n size to display all existing books
      */
     public void displayAllBooks() {
 		// Check if Library has ANY books
@@ -211,6 +221,7 @@ public class Library {
     /**
      * Display all available (status = True) books
       * Big O Analysis - Average Case: O(n)
+	  	Traverses ArrayList of n size to find if book exists, and if does AND it is available, displays it
      */
     public void displayAllAvailableBooks() {
 		System.out.println("=== Available Books ===");
@@ -235,6 +246,7 @@ public class Library {
    /**
     * Load books from a file and add to our Maps
      * Big O Analysis - Average Case: O(n)
+	 	Traverses a given file and for each of the n lines, splits it to make it a book in the library
     * @param filename
     */
    public void loadFromFile(String filename) {
