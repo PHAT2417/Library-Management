@@ -72,11 +72,6 @@ public class Book {
 	 * Convert book information into file format
 	 * @return formatted book string
 	 */
-	public String toFileString() {
-		return getTitle() + ", by " + getAuthor() + ", " +
-				getISBN() + ", " + getYear();
-	}
-	
 	public String toString() {
 		return getTitle() + ", by " + getAuthor() + ", " + getISBN() + 
 				", " + getYear();
