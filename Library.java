@@ -1,3 +1,11 @@
+/*
+* Grace Ho, Pooja Ragala, Nathan Tam, Xuan Phat Tran, and Shedrack Umegboh
+* Library.java is able to store books. It stores books in 
+* 3 different HashMaps that allow for future searches by
+* author, title, and ISBN. This program also allows a user to
+* see the first 20 books in the library, see available books,
+* check out books, add books, and remove books.
+*/
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
