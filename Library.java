@@ -6,15 +6,17 @@ import java.io.*;
 
 public class Library {
 
-    //Fields
-    private HashMap<String, Book> booksByISBN;
-    private HashMap<String, ArrayList<Book>> booksByTitle;
-    private HashMap<String, ArrayList<Book>> booksByAuthor;
+    // Fields
+	// All keys are not case sensitive
+    private HashMap<String, Book> booksByISBN; // Key: ISBN, Value: Book
+    private HashMap<String, ArrayList<Book>> booksByTitle; // Key: Title, Value: ArrayList of Books
+    private HashMap<String, ArrayList<Book>> booksByAuthor; // Key: Author, Value: ArrayList of Books
 
     /**
      * Constructor
      */
     public Library() {
+		// initialize HashMaps
         booksByISBN = new HashMap<>();
         booksByTitle = new HashMap<>();
         booksByAuthor = new HashMap<>();
@@ -33,14 +35,18 @@ public class Library {
 
         // Add book to booksByTitle
         String title = book.getTitle().toLowerCase();
+		// Check if already in HashMap
         if (!booksByTitle.containsKey(title)) {
+			// Initialize ArrayList
             booksByTitle.put(title, new ArrayList<Book>());
         }
         booksByTitle.get(title).add(book);
 
         // Add book to booksByAuthor
         String author = book.getAuthor().toLowerCase();
+		// Check if already in HashMap
         if (!booksByAuthor.containsKey(author)) {
+			// Initialize ArrayList
             booksByAuthor.put(author, new ArrayList<>());
         }
         booksByAuthor.get(author).add(book);
@@ -51,6 +57,7 @@ public class Library {
      * @param isbn - key to identify book
      */
     public void removeBook(String isbn) {
+		// Check is Book is in the library first
     	if(findBookByISBN(isbn) != null) {
     		// Find book by ISBN
     		Book book = findBookByISBN(isbn);
@@ -62,6 +69,7 @@ public class Library {
     		System.out.println("Successfully removed " + isbn + "\n");
     	}
     	else {
+			// Error message
     		System.out.println(isbn + " is not in the library\n");
     	}
     }
@@ -107,18 +115,21 @@ public class Library {
      * @return true/false, whether borrow succeeded
      */
     public boolean borrowBook(String isbn) {
-		Book book= findBookByISBN(isbn);
+		Book book = findBookByISBN(isbn);
 
+		// Check if book was found
 		if (book == null) {
 			System.out.println("Book with ISBN " + isbn + " not found.\n");
 			return false;
 		}
 
+		// Check if book is available
 		if (!book.getStatus()) {
 			System.out.println(book.getTitle() + " is already borrowed.\n");
 			return false;
 		}
 
+		// Update book status
 		book.setStatus(false);
 		System.out.println("Successfully borrowed: " + book.getTitle() + "\n");
 		return true;
@@ -133,18 +144,20 @@ public class Library {
     public boolean returnBook(String isbn) {
 		Book book = findBookByISBN(isbn);
 
+		// Check if book was found
 		if (book == null) {
 			System.out.println("Book with ISBN " + isbn + " not found.\n");
 			return false;
 		}
 
+		// Check if book is available
 		if (book.getStatus()) { 
 			System.out.println(book.getTitle() + " is not currently "
 					+ "borrowed.\n");
 			return false;
 		}
 
-		
+		// Update book status
 		book.setStatus(true);
 		System.out.println("Successfully returned: " + book.getTitle() 
 					+ "\n");
@@ -153,20 +166,22 @@ public class Library {
     }
 
 
-    //Display and Reporting
+    // Display and Reporting
     /**
      * Display first 20 books.
       * Big O Analysis - Average Case: O(n)
      */
     public void displayAllBooks() {
+		// Check if Library has ANY books
 		if (booksByISBN.isEmpty()) {
 			System.out.println("The Library has no books.\n");
 			return;
 		}
 
+		// Header
 		System.out.println("=== All Books (first 20 shown) ===");
 
-		int count = 0;
+		int count = 0; // track books displayed
 
 		for (Book book : booksByISBN.values()) {
 
@@ -177,7 +192,7 @@ public class Library {
 			System.out.println((count + 1) + ". " + book.toString()
 					+ " [" + (book.getStatus() ? "Available" : "Borrowed") 
 					+ "]");
-			count++;
+			count++; // increment count
 								
 
     	}
@@ -192,11 +207,11 @@ public class Library {
     public void displayAllAvailableBooks() {
 		System.out.println("=== Available Books ===");
 
-		int count = 0;
+		int count = 0; // track books displayed
 
 		for (Book book : booksByISBN.values()) {
 			if (book.getStatus()) {
-				count++;
+				count++; // increment count
 				System.out.println(count + ". " + book.toString());
 			}
 		}
