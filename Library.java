@@ -76,8 +76,8 @@ public class Library {
     		
     		// Remove from all maps
     		booksByISBN.remove(isbn);
-    		booksByAuthor.remove(book.getAuthor().toLowerCase()));
-    		booksByTitle.remove(book.getTitle().toLowerCase()));
+    		booksByAuthor.remove(book.getAuthor().toLowerCase());
+    		booksByTitle.remove(book.getTitle().toLowerCase());
     		System.out.println("Successfully removed " + isbn + "\n");
     	}
     	else {
